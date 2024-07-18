@@ -5,7 +5,6 @@
       const post = function(value) {
         window.webkit.messageHandlers.recaptcha.postMessage(value);
       };
-
       console.log = function(message) {
         post({ log: message });
       };
@@ -46,7 +45,6 @@
         } catch (e) {
           post({ error: 27 });
         }
-
         grecaptcha.execute();
       };
 
@@ -65,14 +63,17 @@
             console.log(token);
             post({ token });
             clearObservers();
+            reset();
           },
           "expired-callback": function() {
             post({ error: 28 });
             clearObservers();
+            reset();
           },
           "error-callback": function() {
             post({ error: 29 });
             clearObservers();
+            reset();
           },
           size: "invisible"
         });
@@ -94,8 +95,18 @@
         });
       };
     </script>
+    <style>
+      .g-recaptcha div {
+        width: 100% !important;
+        height: 100% !important;
+      }
+    * {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    </style>
   </head>
-  <body id="body">
+  <body id="body" class="g-recaptcha">
     <span id="submit" style="visibility: hidden;"></span>
     <script src="${endpoint}" async defer></script>
   </body>
